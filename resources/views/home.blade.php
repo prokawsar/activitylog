@@ -6,34 +6,31 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="card">
                     <div class="card-header">
-                        Dashboard
+                        <span>Dashboard </span>
+
                         <span class="float-right">
-                            {{ \Carbon\Carbon::today()->format('d-M-Y') }}
+                            {{ \Carbon\Carbon::now()->format('d-M-Y') }}
                         </span>
                     </div>
-
-                    <div class="card-body col-md-12">
+                    @php
+                        $check = \App\Log::whereDate('created_at', DB::raw('CURDATE()'))->first();
+                      //  dd($check);
+                    @endphp
+                    <div class="card-body col-md-12 @if( $check) disabledDiv @endif ">
                         @if (session('status'))
-                            <div class="alert alert-success">
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
                                 {{ session('status') }}
                             </div>
                         @endif
+
                         <div class="row">
                             <div class="col-md-6">
-
-                                    <form class="form-inline" action="#" method="post">
-                                        {{ csrf_field() }}
-
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Add New Activity" class="form-control" id="activity">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Add</button>
-
-                                    </form>
-
-
                                 @php
-                                    $activity = \App\Activity::all();
+                                    $activity = \App\Activity::where('enable', 1)->get();
                                 @endphp
                                 {{--<h3>Current Activity </h3>--}}
                                 <table class="table">
@@ -47,10 +44,19 @@
                                     <tbody>
                                     @foreach($activity as $item)
                                         <tr>
-                                            <input type="hidden" id="id" value="{{ $item->id }}" >
-                                            <td id="name">{{$item->name  }}</td>
+                                            <input type="hidden" id="id{{ $item->id }}" value="{{ $item->id }}">
+                                            <td id="name{{ $item->id }}">{{$item->name  }}</td>
                                             {{--<td><button id="add" name="add" class="btn btn-success">Add to log</button></td>--}}
-                                            <td><i title="Add to Log" style="cursor: pointer;" id="add" class="fa fa-plus fa-lg"></i></td>
+                                            <td onclick="getID({{ $item->id }})"><i title="Add to Log"
+                                                                                    style="cursor: pointer; color: #0000F0;"
+                                                                                    id="add"
+                                                                                    class="fa fa-plus fa-lg"></i>
+                                                &nbsp;
+                                                <i onclick="window.location = '/disable{{$item->id }}'"
+                                                   title="Disable Activity"
+                                                   style="cursor: pointer; color: #ac2925;"
+                                                   id="disable" class="fa fa-ban fa-lg"></i>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -59,10 +65,10 @@
                             </div>
                             <div class="col-md-6">
 
-                                <form action="#" method="post">
+                                <form action="{{ route('savelog') }}" method="post">
                                     {{ csrf_field() }}
 
-                                    <table class="table table-active">
+                                    <table class="table table-active" id="items">
                                         <thead class="table-primary">
                                         <tr>
                                             <th class="text-center">Today's Activity</th>
@@ -70,27 +76,70 @@
 
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        @foreach($activity as $item)
-                                            <tr>
-                                                <td>{{$item->name  }}</td>
-                                                <td><i class="fa fa-remove"></i> </td>
-                                            </tr>
-                                        @endforeach
+                                        <tbody id="log">
+
+                                        {{--<tr>--}}
+                                        {{--<td></td>--}}
+                                        {{--<td><i title="Remove" style="cursor: pointer;" id="remove"--}}
+                                        {{--class="fa fa-remove"></i></td>--}}
+                                        {{--</tr>--}}
+
                                         </tbody>
                                     </table>
 
-                                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                                    <button id="submit" type="submit" class="btn btn-primary float-right">Submit</button>
 
                                 </form>
 
 
                             </div>
+
+                            <div class="col-md-6">
+                                @php
+                                    $activity = \App\Activity::where('enable', 0)->get();
+                                @endphp
+                                {{--<h3>Current Activity </h3>--}}
+                                <table class="table">
+                                    <thead class="table-primary">
+                                    <tr>
+                                        <th class="text-center">Disabled Activity</th>
+                                        <th></th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($activity as $item)
+                                        <tr>
+                                            <input type="hidden" id="id{{ $item->id }}" value="{{ $item->id }}">
+                                            <td id="name{{ $item->id }}">{{$item->name  }}</td>
+                                            {{--<td><button id="add" name="add" class="btn btn-success">Add to log</button></td>--}}
+                                            <td onclick="window.location = '/enable{{$item->id }}'"><i title="Enable"
+                                                                                                       style="cursor: pointer; color: #0000F0;"
+
+                                                                                                       class="fa fa-refresh fa-lg"></i>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+
+                            </div>
+
                         </div>
-                        {{--<div class="row justify-content-center">--}}
 
+                        {{--<div class="col-md-6">--}}
+                            {{--<form class="form-inline" action="{{ route('addactivity') }}" method="post">--}}
+                                {{--{{ csrf_field() }}--}}
+
+                                {{--<div class="form-group">--}}
+                                    {{--<input type="text" name="activity" placeholder="Add New Activity"--}}
+                                           {{--class="form-control"--}}
+                                           {{--id="activity">--}}
+                                {{--</div>--}}
+                                {{--<button type="submit" class="btn btn-primary">Add</button>--}}
+
+                            {{--</form>--}}
                         {{--</div>--}}
-
                     </div>
                 </div>
             </div>

@@ -16,8 +16,17 @@ Route::get('/', function () {
         return view('home');
     }
     return view('auth.login');
-});
+})->name('home');
 
 Auth::routes();
+
+Route::post('/savelog', 'ActivityController@saveLog')->name('savelog');
+Route::post('/addactivity', 'ActivityController@addActivity')->name('addactivity');
+Route::get('/enable{id}', 'ActivityController@enableActivity')->name('enable');
+Route::get('/mylog', function (){
+    return view('log');
+})->name('mylog');
+
+Route::get('/disable{id}', 'ActivityController@disableActivity')->name('disable');
 
 //Route::get('/home', 'HomeController@index')->name('home');
