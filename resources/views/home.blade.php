@@ -7,9 +7,15 @@
                 <div class="card">
                     <div class="card-header">
                         <span>Dashboard </span>
-
+                        
+                        @php
+                            $timestamp = \Carbon\Carbon::now();
+                            $date = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $timestamp, 'Asia/Dhaka');
+                            
+                        @endphp
                         <span class="float-right">
-                            {{ \Carbon\Carbon::now()->format('d-M-Y') }}
+                            <div id="clock"></div>
+                            {{ $date->format('d-M-Y') }}
                         </span>
                     </div>
                     @php

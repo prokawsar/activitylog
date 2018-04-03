@@ -36,3 +36,12 @@ $(document).on('click', '#remove', function (e) {
 
 
 });
+
+//    var time = moment().format('LTS');   
+// $('#clock').text(time); 
+
+function update() {
+    $('#clock').text(moment().format('LTS'));
+}
+      
+setInterval(update, 1000);
