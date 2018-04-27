@@ -7,8 +7,8 @@
 </p>
 
 ### This is home page
-<img style="width: 100%; height: 100%;" src="https://thumb.ibb.co/meTSYc/Cdfdfapture.png">
 
+<img src="https://preview.ibb.co/nC41tc/Cdfdfapture.png" alt="Cdfdfapture" border="0" />
 
 
 
