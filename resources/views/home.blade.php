@@ -22,7 +22,7 @@
                 <div class="alert alert-success" role="alert">
                         You have added your log today.  
 
-                        <span class="float-right"> Re Add</span>  
+                        <span class="btn btn-primary float-right"> Re Add</span>  
                     </div>
                 @endif
                 <div class="card">
