@@ -6,6 +6,12 @@
 <a href="https://packagist.org/packages/laravel/framework"></a>
 </p>
 
+### This is home page
+<img style="width: 100%; height: 100%;" src="https://thumb.ibb.co/meTSYc/Cdfdfapture.png">
+
+
+
+
 ## How to use in Local
 
 - [x] Clone the repo `git clone https://github.com/prokawsar/activitylog.git`
