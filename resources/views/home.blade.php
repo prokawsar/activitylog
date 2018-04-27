@@ -4,9 +4,30 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10 col-md-offset-1">
+
+                @if (session('status'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+
+                        {{ session('status') }}
+                    </div>
+                @endif
+                @php
+                    $check = \App\Log::whereDate('created_at', DB::raw('CURDATE()'))->first();
+                    //  dd($check);
+                @endphp
+                @if($check)
+                <div class="alert alert-success" role="alert">
+                        You have added your log today.  
+
+                        <span class="float-right"> Re Add</span>  
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-header">
-                        <span>Dashboard </span>
+                        <span>Activity Tracker </span>
                         
                         @php
                             $timestamp = \Carbon\Carbon::now();
@@ -18,20 +39,10 @@
                             {{ $date->format('d-M-Y') }}
                         </span>
                     </div>
-                    @php
-                        $check = \App\Log::whereDate('created_at', DB::raw('CURDATE()'))->first();
-                      //  dd($check);
-                    @endphp
-                    <div class="card-body col-md-12 @if( $check) disabledDiv @endif ">
-                        @if (session('status'))
-                            <div class="alert alert-success alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                    
 
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                    <div class="card-body col-md-12 @if( $check) disabledDiv @endif ">
+                        
 
                         <div class="row">
                             <div class="col-md-6">

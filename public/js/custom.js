@@ -11,14 +11,16 @@ var ID;
 function getID(id) {
     ID = id;
 }
+
+
 $(document).on('click', '#add', function () {
     var id = $('#id' + ID).val();
     var name = $('#name' + ID).text();
     // console.log(id);
     // console.log(name);
 
-    $('#items > tbody').append('<tr><td> '+ name +' </td> <td><i title="Remove" style="cursor: pointer; color: #ac2925" id="remove" class="fa fa-remove fa-lg"></i></td> </tr>' +
-        '<input type="hidden" value="'+ id +'" name="id[]" ');
+    $('#items > tbody').append('<tr><td> '+ name +' </td> <td><i title="Remove" style="cursor: pointer; color: #ac2925" id="remove" class="fa fa-remove fa-lg"></i></td>' +
+        '<input type="hidden" value="'+ id +'" name="id[]" > </tr>');
 
     if($('#log tr').length >= 1){
         $('#submit').show();
