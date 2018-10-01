@@ -22,8 +22,12 @@
                 <div class="alert alert-success" role="alert">
                         You have added your log today.  
 
-                        <span class="btn btn-primary float-right"> Re Add</span>  
-                    </div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        
+                        <!-- <span class="btn btn-primary float-right"> re add</span>   -->
+                </div>
                 @endif
                 <div class="card">
                     <div class="card-header">
@@ -144,19 +148,19 @@
 
                         </div>
 
-                        {{--<div class="col-md-6">--}}
-                            {{--<form class="form-inline" action="{{ route('addactivity') }}" method="post">--}}
-                                {{--{{ csrf_field() }}--}}
+                        <div class="col-md-6">
+                            <form class="form-inline" action="{{ route('addactivity') }}" method="post">
+                                {{ csrf_field() }}
 
-                                {{--<div class="form-group">--}}
-                                    {{--<input type="text" name="activity" placeholder="Add New Activity"--}}
-                                           {{--class="form-control"--}}
-                                           {{--id="activity">--}}
-                                {{--</div>--}}
-                                {{--<button type="submit" class="btn btn-primary">Add</button>--}}
+                                <div class="form-group">
+                                    <input type="text" name="activity" placeholder="Add New Activity"
+                                           class="form-control"
+                                           id="activity">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add</button>
 
-                            {{--</form>--}}
-                        {{--</div>--}}
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

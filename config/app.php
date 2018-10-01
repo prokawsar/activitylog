@@ -150,7 +150,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        prokawsar\PasswordValidator\PasswordValidatorServiceProvider::class,
         /*
          * Application Service Providers...
          */
